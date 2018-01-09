@@ -1,4 +1,4 @@
-package com.alimdaad;
+/*package com.alimdaad;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -12,3 +12,4 @@ public class PwdEncode {
 	}
 
 }
+*/
