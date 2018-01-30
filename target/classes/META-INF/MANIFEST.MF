@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Implementation-Title: Alimdaad Trust Web Application
 Implementation-Version: 0.0.1-SNAPSHOT
 Built-By: Admin
-Implementation-Vendor-Id: com.AlimdaadTrust
+Implementation-Vendor-Id: org.AlimdaadTrust
 Build-Jdk: 1.8.0_101
 Implementation-URL: http://projects.spring.io/spring-boot/AlimdaadTrus
  t/
