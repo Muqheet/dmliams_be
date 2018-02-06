@@ -1,9 +1,15 @@
 package org.alimdaadsociety.controller;
 
+import java.util.List;
+import java.util.Map;
+
+import javax.mail.MessagingException;
+
 import org.alimdaadsociety.model.bean.AppUser;
-import org.alimdaadsociety.model.repository.AppUserRepository;
+import org.alimdaadsociety.model.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,20 +18,43 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AppUserController {
-	
+
 	@Autowired
-	private AppUserRepository appUserRepository;
-	@Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+	AppUserService appUserService;
+
+	@PostMapping("/auth/Signup/{token}")
+	public void signup(@RequestBody AppUser appUser, @PathVariable String token) throws Exception {
+
+		appUserService.Signup(appUser, token);
+	}		
 	
-	@PostMapping("/signup")
-    public void signUp(@RequestBody AppUser user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        appUserRepository.save(user);
-    }
+	@PostMapping("/auth/ForgotPassword")
+	public void forgotPassword(@RequestBody Map<String, String> jsonEmail) throws MessagingException {
+		appUserService.forgotPassword(jsonEmail.get("email"));
+	}
 	
-	
-	
+	@PostMapping("/auth/ChangePassword/{token}")
+	public void changePassword(@RequestBody Map<String, String> userpassword, @PathVariable String token) throws Exception {
+		appUserService.changePassword(userpassword.get("password"), token);
+	}
+
+
+	@PostMapping("/GenerateToken")
+	public void generateUserToken(@RequestBody Map<String, String> jsonEmail) {		
+		appUserService.generateUserToken(jsonEmail.get("email"));
+	}
+
+//	@GetMapping("/GetRegToken")
+//	public List<AppUserToken> getUserRegToken() {
+//		return appUserTokenRepository.findAll();
+//	}
+//
+	@GetMapping("/AppUsers")
+	public List<AppUser> getAppUsers() {
+		return appUserService.findAll();
+	}
+
+
 	@RequestMapping(value="/hello", method=RequestMethod.GET)
 	public String hello()
 	{	
