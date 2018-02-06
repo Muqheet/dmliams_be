@@ -56,11 +56,31 @@ public class AppUserService {
 		appUserToken.setToken(token);
 		appUserToken.setToken_gen_time(new Date());
 		appUserTokenRepository.save(appUserToken);
-		return token;
-		
+		return token;		
 	}
 
 
+	public void generateUserSignupToken(String email) throws MessagingException {
+		String token = generateUserToken(email);
+		String template = "<b>You are invited</b>"
+				+ "<br><br>"
+				+ "To register your profile as an admin at AlimdaadSociety.org please click the link below and use Signup token <b>"+token+"</b> while registration."
+				+ "<br>"
+				+ "<a href='https://alimdaadsociety.org/Register'>https://alimdaadsociety.org/Register</a>"
+				+ "<br><br>"
+				+ "Note: The token will expire after <b>24</b> hours."
+				+ "<br><br>"
+				+ "If this email is irrelevant to you, disregard this email and no action will be taken."
+				+ "<br><br>"
+				+ "Regards,"
+				+ "<br>"
+				+ "AlimdaadSociety Team"
+				+ "<br><br>"
+				+ "Disclamer: This is an auto-generated email. Please do not reply.";
+		smtpMaliSender.send(email, "Registration Invite", template);
+
+		
+	}
 	public void forgotPassword(String email) throws MessagingException {
 		AppUser user = appUserRepository.findByEmail(email);
 		if(user != null) {
@@ -73,12 +93,14 @@ public class AppUserService {
 						+ "<br><br>"
 						+ "If you don't wish to reset your password, disregard this email and no action will be taken."
 						+ "<br><br>"
+						+ "Note: This link will expire after <b>25</b> minutes."
+						+ "<br><br>"
 						+ "Regards,"
 						+ "<br>"
 						+ "AlimdaadSociety Team"
 						+ "<br><br>"
 						+ "Disclamer: This is an auto-generated email. Please do not reply.";
-			smtpMaliSender.send(email, "Forgot Password", template);
+			smtpMaliSender.send(email, "Reset Password", template);
 			
 		}
 	}

@@ -40,8 +40,8 @@ public class AppUserController {
 
 
 	@PostMapping("/GenerateToken")
-	public void generateUserToken(@RequestBody Map<String, String> jsonEmail) {		
-		appUserService.generateUserToken(jsonEmail.get("email"));
+	public void generateUserSignupToken(@RequestBody Map<String, String> jsonEmail) throws MessagingException {		
+		appUserService.generateUserSignupToken(jsonEmail.get("email"));
 	}
 
 //	@GetMapping("/GetRegToken")
