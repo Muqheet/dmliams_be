@@ -6,8 +6,10 @@ import java.util.Map;
 import javax.mail.MessagingException;
 
 import org.alimdaadsociety.model.bean.AppUser;
+import org.alimdaadsociety.model.bean.AppUserToken;
 import org.alimdaadsociety.model.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,16 +41,21 @@ public class AppUserController {
 	}
 
 
-	@PostMapping("/GenerateToken")
+	@PostMapping("/SignupToken")
 	public void generateUserSignupToken(@RequestBody Map<String, String> jsonEmail) throws MessagingException {		
 		appUserService.generateUserSignupToken(jsonEmail.get("email"));
 	}
+	
+	@GetMapping("/Tokens")
+	public List<AppUserToken> getTokens() {
+		return appUserService.getTokens();
+	}
 
-//	@GetMapping("/GetRegToken")
-//	public List<AppUserToken> getUserRegToken() {
-//		return appUserTokenRepository.findAll();
-//	}
-//
+	@DeleteMapping("/Token")
+	public void deleteToken(String tokenId) {
+		appUserService.deleteToken(tokenId);
+	}
+
 	@GetMapping("/AppUsers")
 	public List<AppUser> getAppUsers() {
 		return appUserService.findAll();

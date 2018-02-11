@@ -1,7 +1,6 @@
 package org.alimdaadsociety.model.service;
 
 import java.util.Date;
-import java.util.Map;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -129,5 +128,18 @@ public class AppUserService {
 	public List<AppUser> findAll() {
 		return (List<AppUser>) appUserRepository.findAll();
 	}
+
+
+	public List<AppUserToken> getTokens() {
+		return appUserTokenRepository.findAll();
+	}
+
+
+	public void deleteToken(String tokenId) {
+		appUserTokenRepository.delete(tokenId);
+		
+	}
+
+
 
 }

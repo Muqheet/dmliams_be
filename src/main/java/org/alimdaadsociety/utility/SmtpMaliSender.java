@@ -22,7 +22,7 @@ public class SmtpMaliSender {
 		helper.setSubject(subject);
 		helper.setTo(to);
 		helper.setText(body, true);/*true indicates HTML*/
-		javaMailSender.send(message);
+//		javaMailSender.send(message);/*temporary disable sending of emails*/
 	}
 
 }
